@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="1 seconds">
+	<property name="web_name" value="oop" />
+	<contextName>${web_name}</contextName>
+	<!--定义输出为根目录下的logs目录 -->
+	<property name="LOG_HOME" value="logs/" />
+
+	<!-- quertz定时任务日志输出目录 -->
+	<property name="QUERTZ_LOG" value="logs/quertz/" />
+
+	<!-- TCP报文日志输出目录 -->
+	<property name="MESSAGE_LOG" value="logs/message/" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>oop %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level
+				%logger{36}-%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 一般性日志文件rolling策略 -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 支持多JVM同时操作同一个日志文件 -->
+		<prudent>true</prudent>
+		<!-- 按天来回滚，如果需要按小时来回滚，则设置为{yyyy-MM-dd_HH} -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${MESSAGE_LOG}/${web_name}.%d{yyyyMMddHH}.%i.log
+			</fileNamePattern>
+			<!-- 最大保存时间为32小时，32小时之前的都将被清理掉 -->
+			<maxHistory>32</maxHistory>
+			<!-- 按时间回滚的同时，按文件大小来回滚 -->
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<!-- 日志输出格式 -->
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{ip}] [%thread] %-5level
+				%logger{36} -%msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+	<!--myibatis log configure -->
+	<logger name="java.sql.Connection" level="DEBUG" />
+	<logger name="java.sql.Statement" level="DEBUG" />
+	<logger name="java.sql.PreparedStatement" level="DEBUG" />
+</configuration>

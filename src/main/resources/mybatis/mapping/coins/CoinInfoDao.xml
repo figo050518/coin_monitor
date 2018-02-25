@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chelp.oop.dao.coins.CoinInfoDao" >
+
+
+    <select id="getByType" resultType="CoinInfo">
+        select t.*  from coin_info t
+        where t.name=#{name} and t.type=#{type};
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="CoinInfo">
+        insert into coin_info(
+        name,
+        sell_price,
+        buy_price,
+        type,
+        update_date
+        )values(
+        #{name},
+        #{sellPrice},
+        #{buyPrice},
+        #{type},
+        #{updateDate}
+        )
+    </insert>
+
+    <update id="update">
+        update coin_info SET
+        sell_price=#{sellPrice},update_date=#{updateDate}
+        where id=#{id}
+    </update>
+
+</mapper>

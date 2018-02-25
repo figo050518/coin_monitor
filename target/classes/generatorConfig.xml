@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="D:\mavnRepo\mysql\mysql-connector-java\5.1.32\mysql-connector-java-5.1.32.jar" />
+	<context id="MySQLTables" targetRuntime="MyBatis3">
+
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://123.206.232.11:3306/coach_help_dev?characterEncoding=utf8"
+			userId="root" password="admin123" />
+
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- bean的配置 -->
+		<javaModelGenerator targetPackage="com.chelp.oop.bean.account"
+			targetProject="src\main\java">
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<!-- mybatis的xml的配置 -->
+		<sqlMapGenerator targetPackage="mybatis.mapping.account"
+			targetProject="src\main\resources" />
+
+		<!-- mapper的配置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.chelp.oop.dao.account" targetProject="src\main\java" />
+
+		<!-- 无exsample 配置 -->
+		<!-- <table schema="coach_help_dev" tableName="insurance"
+			domainObjectName="Insurance">
+		</table>
+		<table schema="coach_help_dev" tableName="pay_account"
+			domainObjectName="PayAccount">
+		</table> -->
+		<table schema="coach_help_dev" tableName="settle_apply"
+			domainObjectName="SettleApply">
+		</table>
+	<!-- 	<table schema="coach_help_dev" tableName="pay_order"
+			domainObjectName="PayOrder">
+		</table>  --> 
+
+	</context>
+</generatorConfiguration>
